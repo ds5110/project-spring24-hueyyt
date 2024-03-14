@@ -25,7 +25,7 @@ Used Data: INFA, SE
    S0101_C01_028E
 
    ```
-    0	Over 60 Pop	state	county	tract
+    0	Over 60 Pop	state	 county	 tract
     1	        542	   23	   001	010100
     2	       1291	   23	   001	010200
     3	        641	   23	   001	010300
@@ -38,10 +38,10 @@ Used Data: INFA, SE
 
    ```
     0	Incarcerated individuals	state	county	tract
-    1	                    None		23	  001	  010100
-    2	                    None		23	  001	  010200
-    3	                    None		23	  001	  010300
-    4	                    None	 	23	  001	  010400
+    1	                    None	23	  001	  010100
+    2	                    None	23	  001	  010200
+    3	                    None	23	  001	  010300
+    4	                    None	23	  001	  010400
    ```
 
  * Veterans(detailed table)
@@ -49,7 +49,7 @@ Used Data: INFA, SE
    B21001_002E
 
     ```
-    0	Veterans	state	county	tract
+    0	Veterans	state	 county	 tract
     1	      95	   23	   001	010100
     2	     408	   23	   001	010200
     3	     173	   23	   001	010300
@@ -61,11 +61,11 @@ Used Data: INFA, SE
    S1810_C01_001E
 
     ```
-    0	Disabled	state	county	tract
-    1	     542	535	23	001	  010100
-    2	    1291	969	23	001	  010200
-    3	     641	804	23	001	  010300
-           832	291	23	001	  010400
+    0	Disabled	state	 county	  tract
+    1	     535	   23	   001	  010100
+    2	     969	   23	   001	  010200
+    3	     804	   23	   001	  010300
+    4      291	   23	   001	  010400
    ```
 
    
