@@ -24,25 +24,25 @@ Used Data: INFA, SE
    -> Total population -> SELECTED AGE CATEGORIES
    S0101_C01_028E
 
-   ```
+    ```
     0	Over 60 Pop	state	 county	 tract
     1	        542	   23	   001	010100
     2	       1291	   23	   001	010200
     3	        641	   23	   001	010300
     4	        832	   23	   001	010400
-   ```
+    ```
 
  * Incarcerated individuals(detailed table)
    Topics: Population and People -> Count, Estimates, and Projections -> Group Quarters Population -> B26103 Group Quarters Type -> Adult correctional facilities
    B26103_004E
 
-   ```
-    0	Incarcerated individuals	state	county	tract
+    ```
+    0	Incarcerated individuals state	county	 tract
     1	                    None	23	  001	  010100
     2	                    None	23	  001	  010200
     3	                    None	23	  001	  010300
     4	                    None	23	  001	  010400
-   ```
+    ```
 
  * Veterans(detailed table)
    Topics: Population and People ->Veterans
@@ -65,7 +65,7 @@ Used Data: INFA, SE
     1	     535	   23	   001	  010100
     2	     969	   23	   001	  010200
     3	     804	   23	   001	  010300
-    4      291	   23	   001	  010400
-   ```
+    4	     291	   23	   001	  010300
+    ```
 
    
