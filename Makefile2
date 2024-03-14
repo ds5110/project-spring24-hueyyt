@@ -1,44 +1,9 @@
-# .PHONY: data
+.PHONY: data
 
-# all: data
+all: data
 
-# SE1:
-# 	python3 -B src/SE1.py
-
-# clean-data:
-# 	rm -rf data
-
-.PHONY: all clean data img speed avg json state block DDI popmap
-
-
-all: clean-data data img speed avg json state block DDI popmap
-
-data:
-	mkdir -p data
-	cd data; curl -LO https://www2.census.gov/geo/tiger/TIGER2023/TABBLOCK20/tl_2023_78_tabblock20.zip
-	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_Cable_fixed_broadband_J23_05mar2024.zip
-	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_Copper_fixed_broadband_J23_05mar2024.zip
-	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_FibertothePremises_fixed_broadband_J23_05mar2024.zip
-	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_LicensedFixedWireless_fixed_broadband_J23_05mar2024.zip
-	cd data; curl -LO https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/county_tract_total_covered_populations.xlsx
-
-img:
-	mkdir -p img
-
-speed:
-	python3 -B src/speed.py
-
-population:
-	python3 -B src/population.py
-
-INFA:
-	python3 -B src/INFA.py
-
-maps:
-	python3 -B src/maps.py
-
-popmap:
-	python3 -B src/popmap.py
+SE1:
+	python3 -B src/SE1.py
 
 clean-data:
 	rm -rf data
