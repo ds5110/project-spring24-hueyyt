@@ -47,8 +47,8 @@ df_rural.rename(columns={'H2_003N': 'RURAL_POP'}, inplace=True)
 df_rural['ID'] = df_rural['state'] + df_rural['county'] + df_rural['tract']
 
 df_rural_res = df_rural[['NAME', 'TOTAL_POP', 'URBAN_POP', 'RURAL_POP', 'ID']]
-print(df_rural_res.info())
-df_rural_res.head()
+print('Rural residents')
+print(df_rural_res.head())
 
 # Find the covered populations - Individuals with a language barrier
 lang_code = ['B06007_005M', 'B06007_008E']
