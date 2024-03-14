@@ -8,7 +8,7 @@ subject_root = 'https://api.census.gov/data/2022/acs/acs5/subject?get='
 detailed_root = 'https://api.census.gov/data/2022/acs/acs5?get='
 profile_root = 'https://api.census.gov/data/2022/acs/acs5/profile?get='
 cprofile_root = 'https://api.census.gov/data/2022/acs/acs5/cprofile?get='
-responserate_root = 'https://api.census.gov/data/2020/dec/dhc/groups?get='
+responserate_root = 'https://api.census.gov/data/2020/dec/dhc?get=group(H2)'
 
 # reset the dataframe index
 def set_index(df):
@@ -35,7 +35,20 @@ df_minority_res = df_minority[['TOTAL_POP', 'MINORITY_POP', 'ID']]
 print('Members of a racial or ethnic minority group')
 print(df_minority_res.head())
 
-# TODO: Find the covered populations - Rural residents
+# Find the covered populations - Rural residents
+rural_url = responserate_root + geog
+df_rural = pd.read_json(rural_url)
+set_index(df_rural)
+
+df_rural = df_rural.drop(columns=['H2_001NA', 'H2_002NA', 'H2_003NA', 'H2_004N', 'H2_004NA'])
+df_rural.rename(columns={'H2_001N': 'TOTAL_POP'}, inplace=True)
+df_rural.rename(columns={'H2_002N': 'URBAN_POP'}, inplace=True)
+df_rural.rename(columns={'H2_003N': 'RURAL_POP'}, inplace=True)
+df_rural['ID'] = df_rural['state'] + df_rural['county'] + df_rural['tract']
+
+df_rural_res = df_rural[['NAME', 'TOTAL_POP', 'URBAN_POP', 'RURAL_POP', 'ID']]
+print(df_rural_res.info())
+df_rural_res.head()
 
 # Find the covered populations - Individuals with a language barrier
 lang_code = ['B06007_005M', 'B06007_008E']
