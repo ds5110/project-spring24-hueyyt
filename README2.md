@@ -37,7 +37,7 @@ Used Data: INFA, SE
    B26103_004E
 
     ```
-    0	Incarcerated individuals  state 	county	 tract
+    0	Incarcerated individuals   state 	county	 tract
     1	                    None	23	  001	  010100
     2	                    None	23	  001	  010200
     3	                    None	23	  001	  010300
