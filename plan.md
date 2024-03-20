@@ -18,7 +18,7 @@ Week 13: Website Update
 
 Implement and launch the updated DDI visualizations and insights on the project's GitHub Pages site.
 
-Roles and individual responsibilities 
+Roles and individual responsibilities:
 
 Yuan Tao
 
