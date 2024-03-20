@@ -1,4 +1,5 @@
 Story
+
 This project is designed to address the challenges posed by the digital divide, particularly focusing on the populations most affected by this issue. By referencing the updates made in the Digital Equity Act of 2021, our project introduces an enhanced Digital Divide Index (DDI) to better assess and allocate resources where they are most needed. The revision in the project takes into account the new definition of 'covered populations' provided by the act, reflecting our commitment to adapting our analysis to the most current legislative framework and stakeholder feedback.
 
 Approach
