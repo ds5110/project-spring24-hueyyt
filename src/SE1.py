@@ -2,6 +2,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+## 算SE
+## 合并readme和 Makefile
 # Chosen two tables
 detailed_table = 'https://api.census.gov/data/2022/acs/acs5?get='
 subject_table = 'https://api.census.gov/data/2022/acs/acs5/subject?get='
@@ -34,3 +36,4 @@ df_subject.rename(columns={'S1810_C01_001E': 'Disabled'})
 
 #Output the first 5 rows of data
 print(df_subject.head())
+
