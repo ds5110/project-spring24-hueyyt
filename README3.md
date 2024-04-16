@@ -31,6 +31,17 @@ _(def)_ The rural population, as defined by the Digital Equity Act of 2021, is t
 outside of cities and towns with more than 20,000 residents or living outside larger cities and
 towns with more than 50,000 residents and their surrounding urban areas.
 
+Below is an overview of the population data about rural residents in 2020 Demographic and Housing Characteristics Table. 
+```
+Rural residents
+0                                          NAME TOTAL_POP URBAN_POP RURAL_POP           ID
+0  Census Tract 101; Androscoggin County; Maine      1006      1006         0  23001010100
+1  Census Tract 102; Androscoggin County; Maine      2243      1564       679  23001010200
+2  Census Tract 103; Androscoggin County; Maine      1216      1216         0  23001010300
+3  Census Tract 104; Androscoggin County; Maine       845       845         0  23001010400
+4         Census Tract 9901; York County; Maine         0         0         0  23031990100
+```
+
 ## Individuals with a language barrier
 _(def)_ English learners or have low literacy levels. English learners are defined as individuals who
 speak a language other than English at home and speak English less than “very well.”
