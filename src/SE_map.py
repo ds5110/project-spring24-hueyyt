@@ -14,7 +14,7 @@ df = df.drop_duplicates(subset="name")
 df.set_index('county', inplace=True)
 diction = df.to_dict(orient='index')
 
-score = 'SE'
+score = 'SE_normed'
 df_data = pd.read_csv('data/SE.csv', index_col=None)
 
 print(df_data.columns)

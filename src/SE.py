@@ -243,5 +243,7 @@ df_se['SE'] = round(df_se['z_per_incar'] + df_se['z_per_vet'] + df_se['z_per_ove
                     + df_se['z_per_dis'] + df_se['z_per_minority_pop'] + df_se['z_per_lang_pop']
                     + df_se['z_per_poverty_pop'] + df_se['z_per_est_rural_pop_22_v2'], 2)
 
+df_se['SE_normed'] = 100*(df_se['SE']-df_se['SE'].min())/(df_se['SE'].max()-df_se['SE'].min())
+
 df_se.to_csv('data/SE.csv', index=False)
 
