@@ -128,7 +128,7 @@ Below are the top 5 areas with the largest number of individuals with a language
 ```
 
 The visualization is attached below.
-<img src='../figs/per_lang_tract.png'>
+<img src='../figs/per_lang_pop_tract.png'>
 
 #### Individuals living in households with incomes not exceeding 150 percent of the poverty level
 Below are the top 5 areas with the largest number of individuals living in households with incomes not exceeding 150 percent of the poverty level.
@@ -142,7 +142,7 @@ Below are the top 5 areas with the largest number of individuals living in house
 ```
 
 The visualization is attached below.
-<img src='../figs/per_poverty_tract.png'>
+<img src='../figs/per_poverty_pop_tract.png'>
 
 #### Furthur Analysis
 Based on the observation of the top 5 areas lists, we saw some areas shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
