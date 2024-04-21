@@ -30,7 +30,7 @@ Below are the top 5 areas with the highest SE scores.
 307   93.260229     Census Tract 9653.02, Somerset County
 ```
 The visualization is attached below.
-<img src='../figs/SE_normed_tract.png'>
+<img src='../figs/SE_normed_tract.png' width='300'>
 
 #### Persons who are 60 years of age or older
 Below are the top 5 areas with the largest number of persons who are 60 years of age or older.
