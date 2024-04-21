@@ -83,12 +83,37 @@ make -f maps
 To combine INFA and geo data and make maps by geo id.
 
 ### SE (socioeconomic)
-To calculate the estimated rural residents, use the following command:
+First of all, the `openpyxl` package needs to be installed so that excel files can be read. The following command is used to install `openpyxl`.
+`
+conda install openpyxl
+`
+
+To calculate the estimated rural residents and save the result into a .csv file, use the following command:
 ```
 make rural_est
 ```
-- This command calculates the rural residents using three different approaches. 2022 rural residents data is not available in ACS tables; therefore, we'll have to estimate the data. 
-  - approach 1: 2022 state data in [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes all possible results. we use the ratio (population in census tract level/population in state level).
+
+- The output of this command is list below. It includes the estimation of rural residents. Although the result of the first approach is the closest one, the estimated distribution can be highly inaccurate. Therefore, the second approach is selected. 
+```
+Total rural population in maine (actual):
+ 1051000
+Total rural population in maine (estimation v1):
+ 1037051
+Total rural population in maine (estimation v2):
+ 839530
+Total rural population in maine (estimation v3):
+ 819097
+```
+- This command calculates the rural residents using three different approaches. 2022 rural residents data in census tract level is not available in ACS tables; therefore, we'll have to estimate the data. 
+  - approach 1: 2022 state data in [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes 8 total covered populations in state level. We can use the ratio (population in census tract level/population in state level) to estimate rural residents. However, this approach is not reliable because it can assign data to urban area without rural residents.
+  - approach 2: ACS P2(Urban and Rural) 2020 Congressional District Summary File includes urban and rural populations in census tract level and block level. Based on the analysis, each block only includes rural or urban population. Therefore, we can assign rural/urban label to each block. Then we estimate 2022 population in block level and group them into census tract. If a block has rural label, we consider all residents in this block as rural residents. 
+  - approach 3: 2019 census tract data in [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes the percentage of rural residents in each census tract. We can use this percentage to estimate 2022 rural residents in each census tract. 
+
+To calculate SE scores and save the result into a .csv file, the following command is executed.
+```
+make SE
+```
+- The output will be the top 5 areas(census tracts) in each type of covered populations. The result will be discussed in [results.md].
 
 
 ## Visualization
@@ -102,6 +127,7 @@ SE MAP:
 In the SE results, the south parts where are close to Portland and have more population have good performence. They have more younger and well-educated people. Middle close to south tracts where are close to the sea have better performence than in the west. In the east tracts, the performence is not very well. The worst part is the north tracts close to the west. 
 
 ## Challenge
+The major challenge is the data collection step. 
 * Incarcerated individuals
   ** The data cannot be find directly in the American Community Survey. In the census.gov, after choosing Population and People -> Counts, Estimates, and Projections -> Group Quarters Population -> B26103 Group Quarters Type(3 types), we can get Adult correctional facilities which is 3350. It's a estimated data and we cannot get the data of each tract.
   ** In the [National Institute Corrections](https://nicic.gov/resources/nic-library/state-statistics/2021/maine-2021), we can get the corrections state statistics information of Maine in 2021. 
@@ -110,4 +136,4 @@ In the SE results, the south parts where are close to Portland and have more pop
   ** The number of incarcerated people in Maine and each tract is estimated.
 
 * Rural
-  ** Rural residents data is incomplete because rural residents data (2018-2022) can not be found. [H2 Urban and Rural Table](https://data.census.gov/table/DECENNIALDHC2020.H2?q=rural&g=040XX00US23$1400000) might be added but it only contains data in 2020. 
+  * Rural residents data is incomplete because rural residents data (2018-2022) can not be found. [H2 Urban and Rural Table](https://data.census.gov/table/DECENNIALDHC2020.H2?q=rural&g=040XX00US23$1400000) might be added but it only contains data in 2020. 

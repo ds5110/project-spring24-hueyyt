@@ -213,6 +213,7 @@ df_se['SE_normed'] = 100*(df_se['SE']-df_se['SE'].min())/(df_se['SE'].max()-df_s
 df_se = df_se.drop(columns=['total_pop'])
 
 # check top census tracts
+df_se_top = df_se[['SE_normed', 'loc']].sort_values(by='SE_normed', ascending = False, inplace=False)
 df_vet_res_top = df_se[['vet', 'SE_normed', 'loc']].sort_values(by='vet', ascending = False, inplace=False)
 df_incar_res_top = df_se[['estimated_incar', 'SE_normed', 'loc']].sort_values(by='estimated_incar', ascending = False, inplace=False)
 df_over60_res_top = df_se[['over60', 'SE_normed', 'loc']].sort_values(by='over60', ascending = False, inplace=False)
@@ -223,6 +224,9 @@ df_lang_res_top = df_se[['estimated_lang', 'SE_normed', 'loc']].sort_values(by='
 df_poverty_res_top = df_se[['poverty_pop', 'SE_normed', 'loc']].sort_values(by='poverty_pop', ascending = False, inplace=False)
 
 print('Top census tracts')
+print('SE scores')
+print(df_se_top.head())
+
 print('Persons who are 60 years of age or older')
 print(df_over60_res_top.head())
 
