@@ -65,8 +65,9 @@ df_num = df_se[['z_per_incar', 'z_per_vet', 'z_per_over60', 'z_per_dis', 'z_per_
 corr = df_num.corr()
 print('Correlation:\n', corr)
 
-sns.heatmap(corr)
+sns.heatmap(corr, annot=True, fmt='.2f',)
 plt.title('Visualization')
+plt.tight_layout()
 plt.savefig('figs/corr.png')
 plt.show()
 
