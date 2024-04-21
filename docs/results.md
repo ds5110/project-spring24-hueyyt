@@ -100,7 +100,7 @@ Below are the top 5 areas with the largest number of members of a racial or ethn
 ```
 
 The visualization is attached below.
-<img src='../figs/per_minority_tract.png'>
+<img src='../figs/per_minority_pop_tract.png'>
 
 #### Rural residents
 Below are the top 5 areas with the largest number of rural residents.
