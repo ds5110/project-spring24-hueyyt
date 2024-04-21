@@ -30,7 +30,7 @@ Below are the top 5 areas with the highest SE scores.
 307   93.260229     Census Tract 9653.02, Somerset County
 ```
 The visualization is attached below.
-<img src='figs/SE_normed_tract.png'>
+<img src='../figs/SE_normed_tract.png'>
 
 #### Persons who are 60 years of age or older
 Below are the top 5 areas with the largest number of persons who are 60 years of age or older.
@@ -44,7 +44,7 @@ Below are the top 5 areas with the largest number of persons who are 60 years of
 ```
 
 The visualization is attached below.
-<img src='figs/per_over60_tract.png'>
+<img src='../figs/per_over60_tract.png'>
 
 #### Incarcerated individuals
 Below are the top 5 areas with the largest number of incarcerated individuals.
@@ -58,7 +58,7 @@ Below are the top 5 areas with the largest number of incarcerated individuals.
 ```
 
 The visualization is attached below.
-<img src='figs/per_incar_tract.png'>
+<img src='../figs/per_incar_tract.png'>
 
 #### Veterans
 Below are the top 5 areas with the largest number of veterans.
@@ -72,7 +72,7 @@ Below are the top 5 areas with the largest number of veterans.
 ```
 
 The visualization is attached below.
-<img src='figs/per_vet_tract.png'>
+<img src='../figs/per_vet_tract.png'>
 
 #### Persons with disabilities
 Below are the top 5 areas with the largest number of persons with disabilities.
@@ -86,7 +86,7 @@ Below are the top 5 areas with the largest number of persons with disabilities.
 ```
 
 The visualization is attached below.
-<img src='figs/per_dis_tract.png'>
+<img src='../figs/per_dis_tract.png'>
 
 #### Members of a racial or ethnic minority group
 Below are the top 5 areas with the largest number of members of a racial or ethnic minority group.
@@ -100,7 +100,7 @@ Below are the top 5 areas with the largest number of members of a racial or ethn
 ```
 
 The visualization is attached below.
-<img src='figs/per_minority_tract.png'>
+<img src='../figs/per_minority_tract.png'>
 
 #### Rural residents
 Below are the top 5 areas with the largest number of rural residents.
@@ -114,7 +114,7 @@ Below are the top 5 areas with the largest number of rural residents.
 ```
 
 The visualization is attached below.
-<img src='figs/per_est_rural_pop_22_v2_tract.png'>
+<img src='../figs/per_est_rural_pop_22_v2_tract.png'>
 
 #### Individuals with a language barrier
 Below are the top 5 areas with the largest number of individuals with a language barrier.
@@ -128,7 +128,7 @@ Below are the top 5 areas with the largest number of individuals with a language
 ```
 
 The visualization is attached below.
-<img src='figs/per_lang_tract.png'>
+<img src='../figs/per_lang_tract.png'>
 
 #### Individuals living in households with incomes not exceeding 150 percent of the poverty level
 Below are the top 5 areas with the largest number of individuals living in households with incomes not exceeding 150 percent of the poverty level.
@@ -142,7 +142,7 @@ Below are the top 5 areas with the largest number of individuals living in house
 ```
 
 The visualization is attached below.
-<img src='figs/per_poverty_tract.png'>
+<img src='../figs/per_poverty_tract.png'>
 
 #### Furthur Analysis
 Based on the observation of the top 5 areas lists, we saw some areas shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
@@ -199,7 +199,7 @@ Top 50 Comparison
 27 common locations between Rural and Language
 ```
 
-<img src='figs/corr.png'>
+<img src='../figs/corr.png'>
 
 ### DDI
 
