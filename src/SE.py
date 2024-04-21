@@ -8,6 +8,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 import requests
+from bs4 import BeautifulSoup
 
 # helpful function - reset the dataframe index
 def set_index(df):
@@ -51,25 +52,23 @@ df_detailed['per_vet'] = np.where(df_detailed['totalpop'] > 0, df_detailed['vet'
 df_detailed['z_per_vet'] = standardize_score(df_detailed, 'per_vet')
 
 
-def fetch_incar():
-    url = 'https://api.census.gov/data/2022/acs/acs5?get=B26103_004E&for=state:23'
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        total_incarcerated_in_maine = int(data[1][0])
-        return total_incarcerated_in_maine
-    else:
-        print("Error fetching data from Census API")
-        return None
+df = pd.read_excel("data/state_total_covered_populations_2022.xlsx")
+df.to_csv("data/state_total_covered_populations_2022.csv", index=False)
+maine_row = df[df['st'] == 23]
+if not maine_row.empty:
+    me_totalpop = maine_row['state_tot_pop'].values[0]
+    pct_incarc_pop = maine_row['pct_incarc_pop'].values[0]
+else:
+    print("Maine data not found in the DataFrame.")
 
-incar = fetch_incar()
+state_incar = (me_totalpop * (pct_incarc_pop/100)).round().astype(int)
 
-df_detailed['incar'] = pd.to_numeric(df_detailed['B26103_004E'], errors='coerce')
-num_tracts = df_detailed['tract'].nunique()
-avg_incar_per_tract = incar / num_tracts
-df_detailed['avg_incar_per_tract'] = avg_incar_per_tract
-df_detailed['incar'] = df_detailed['avg_incar_per_tract']
-df_detailed['per_incar'] = np.where(df_detailed['totalpop'] > 0, df_detailed['incar'] / df_detailed['totalpop'], 0)
+df_detailed['proportion'] = df_detailed['totalpop'] / me_totalpop
+# Estimate the number of incarcerated individuals in each tract based on the proportion
+df_detailed['estimated_incar'] = df_detailed['proportion'] * state_incar
+# Round the estimated incarcerated individuals to the nearest integer
+df_detailed['estimated_incar'] = df_detailed['estimated_incar'].round().astype(int)
+df_detailed['per_incar'] = np.where(df_detailed['totalpop'] > 0, df_detailed['estimated_incar'] / df_detailed['totalpop'], 0)
 df_detailed['z_per_incar'] = standardize_score(df_detailed, 'per_incar')
 
 # S0101_C01_028E: 60 years and over
@@ -94,7 +93,7 @@ df_subject['z_per_dis'] = standardize_score(df_subject, 'per_dis')
 str_list = ['state', 'county', 'tract']
 df_detailed['id'] = df_detailed['state'] + df_detailed['county'] + df_detailed['tract']
 df_subject['id'] = df_subject['state'] + df_subject['county'] + df_subject['tract']
-df_detailed_res = df_detailed[['id', 'totalpop', 'incar', 'per_incar', 'z_per_incar','vet', 'per_vet', 'z_per_vet']]
+df_detailed_res = df_detailed[['id', 'totalpop', 'estimated_incar', 'per_incar', 'z_per_incar','vet', 'per_vet', 'z_per_vet']]
 df_subject_res = df_subject[['id', 'over60', 'per_over60', 'z_per_over60', 'dis', 'per_dis', 'z_per_dis']]
 df_se1 = pd.merge(df_detailed_res, df_subject_res, on='id', how='inner')
 
