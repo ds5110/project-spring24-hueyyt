@@ -30,7 +30,7 @@ Below are the top 5 areas with the highest SE scores.
 307   93.260229     Census Tract 9653.02, Somerset County
 ```
 The visualization is attached below.
-<img src='../figs/SE_normed_tract.png' width='300'>
+<img src='../figs/SE_normed_tract.png' width='400'>
 
 #### Persons who are 60 years of age or older
 Below are the top 5 areas with the largest number of persons who are 60 years of age or older.
@@ -44,7 +44,7 @@ Below are the top 5 areas with the largest number of persons who are 60 years of
 ```
 
 The visualization is attached below.
-<img src='../figs/per_over60_tract.png'>
+<img src='../figs/per_over60_tract.png' width='450'>
 
 #### Incarcerated individuals
 Below are the top 5 areas with the largest number of incarcerated individuals.
@@ -58,7 +58,7 @@ Below are the top 5 areas with the largest number of incarcerated individuals.
 ```
 
 The visualization is attached below.
-<img src='../figs/per_incar_tract.png'>
+<img src='../figs/per_incar_tract.png' width='500'>
 
 #### Veterans
 Below are the top 5 areas with the largest number of veterans.
