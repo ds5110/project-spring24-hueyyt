@@ -1,15 +1,16 @@
 # project-spring24： MCA
 
 ## Team members
-1.TaoYuan(lead)
+1. TaoYuan(lead)
 github username:hueyyt
-2.Qian Yin
+2. Qian Yin
 github username:PennyY1103
-3.Sihan Bai
+3. Sihan Bai
 github username:hanasu061
 
-## Data Collection / Resources
+## Data source
 According to the [Purdue's 2021 Digital Divide Index](https://storymaps.arcgis.com/stories/8ad45c48ba5c43d8ad36240ff0ea0dc7), we need two parts: INFA and SE.
+
 INFA data comes from the [FCC broadband data collection](https://www.fcc.gov/BroadbandData).
 
 SE data comes from the [American Community Survey 5-Year Data (2009-2022)](https://www.census.gov/data/developers/data-sets/acs-5year.html).
@@ -18,8 +19,8 @@ Detailed Tables contain the most detailed cross-tabulations, many of which are p
 Subject Tables provide an overview of the estimates available in a particular topic.  The data are presented as population counts and percentages. 
 Maine's number in the table: 23
 * Persons who are 60 years of age or older
-  ** Subject tables: S0101_C01_028E
-  ** Estimate!!Total!!Total population!!SELECTED AGE CATEGORIES!!60 years and over
+  * Subject tables: S0101_C01_028E
+  * Estimate!!Total!!Total population!!SELECTED AGE CATEGORIES!!60 years and over
 
 * Incarcerated individuals
   ** Used 2022 State Data in [Digital Equity Act of 2021 (census.gov)](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html).
@@ -37,36 +38,28 @@ Maine's number in the table: 23
   ** Estimate!!Total!!Total civilian noninstitutionalized population	Disability Characteristics
 
 * Members of a racial or ethnic minority group
-  ** Data profiles: ['DP05_0072E', 'DP05_0073E', 'DP05_0080E', 'DP05_0081E', 'DP05_0082E', 'DP05_0083E', 'DP05_0084E', 'DP05_0085E']
-  _(def)_ The population who identify as a race other than White alone or as Hispanic or Latino of any
+  * _(def)_ The population who identify as a race other than White alone or as Hispanic or Latino of any
     race
-
-    Below is an overview of the population data about members of a racial or ethnic minority group.
+  * _(data source)_ American Community Survey B01001(Sex by Age) 2022 5-Year Estimates Detailed Tables
 
 * Rural residents
-    _(def)_ The rural population, as defined by the Digital Equity Act of 2021, is the population living
+  * _(def)_ The rural population, as defined by the Digital Equity Act of 2021, is the population living
     outside of cities and towns with more than 20,000 residents or living outside larger cities and
     towns with more than 50,000 residents and their surrounding urban areas.
-
-    Below is an overview of the population data about rural residents in 2020 Demographic and Housing Characteristics Table. 
+  * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data, 2019 County and Census Tract Data, and American Community Survey P2(Urban and Rural) 2020 Congressional District Summary File
 
 * Individuals with a language barrier, including those who are English learners or have low literacy levels
-  ** Detailed table: B06007_005M, B06007_008E
-  ** B06007_005M: Margin of Error!!Total:!!Speak Spanish:!!Speak English less than "very well"
-  ** B06007_008E: Estimate!!Total:!!Speak other languages:!!Speak English less than "very well"
-  _(def)_ English learners or have low literacy levels. English learners are defined as individuals who
+  * _(def)_ English learners or have low literacy levels. English learners are defined as individuals who
     speak a language other than English at home and speak English less than “very well.”
-
-    Below is an overview of the population data about individuals with a language barrier.
+  * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data
 
 * Individuals living in households with incomes not exceeding 150 percent of the poverty level
-  ** Subject table: S1701_C01_040E
-  ** Estimate!!Total!!Population for whom poverty status is determined!!ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS!!150 percent of poverty level
-    _(def)_ Households with income no more than 150 percent of the federal poverty threshold.
-    Below is an overview of the population data about individuals with incomes not exceeding 150 percent of the poverty level.
+  * _(def)_ Households with income no more than 150 percent of the federal poverty threshold.
+  * American Community Survey S1701(Poverty Status in the Past 12 Months) 2022 5-Year Estimates Subject Tables
 
+## Data processing
 
-## Implement
+### INFA (infrastructure/adoption)
 In order to print the INFA results, use command:
 ```
 make -f data
@@ -89,13 +82,16 @@ make -f maps
 ```
 To combine INFA and geo data and make maps by geo id.
 
-
-In order to print the SE results, use command:
+### SE (socioeconomic)
+To calculate the estimated rural residents, use the following command:
 ```
-make SE 
+make rural_est
 ```
+- This command calculates the rural residents using three different approaches. 2022 rural residents data is not available in ACS tables; therefore, we'll have to estimate the data. 
+  - approach 1: 2022 state data in [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes all possible results. we use the ratio (population in census tract level/population in state level).
 
-## Results
+
+## Visualization
 INFA MAP:
 ![01](figs/INFA_scaled_tract.png)
 This is a test map for using code and visualize data, not final version. Since we found several different equations and data. 

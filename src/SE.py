@@ -8,7 +8,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 import requests
-from bs4 import BeautifulSoup
+
 
 # helpful function - reset the dataframe index
 def set_index(df):
@@ -33,6 +33,11 @@ profile_table = 'https://api.census.gov/data/2022/acs/acs5/profile?get='
 cprofile_table = 'https://api.census.gov/data/2022/acs/acs5/cprofile?get='
 responserate_table = 'https://api.census.gov/data/2020/dec/dhc?get=group(P2)'
 
+total_covered_state_url = 'https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/state_total_covered_populations_2022.xlsx'
+total_covered_tract_url = 'https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/county_tract_total_covered_populations.xlsx'
+
+#################################################################################################################
+# Find the covered populations - Incarcerated individuals and Veterans
 # B01001_001E: Total population of Maine
 # B26103_004E: Incarcerated individuals
 # B21001_002E: Veterans
@@ -51,10 +56,8 @@ df_detailed['vet'] = pd.to_numeric(df_detailed['B21001_002E'], errors='coerce')
 df_detailed['per_vet'] = np.where(df_detailed['totalpop'] > 0, df_detailed['vet'] / df_detailed['totalpop'], 0)
 df_detailed['z_per_vet'] = standardize_score(df_detailed, 'per_vet')
 
-
-df = pd.read_excel("data/state_total_covered_populations_2022.xlsx")
-df.to_csv("data/state_total_covered_populations_2022.csv", index=False)
-maine_row = df[df['st'] == 23]
+df_total_covered_state = pd.read_excel(total_covered_state_url, sheet_name='state_total_covered_populations', dtype={'geography_name': str})
+maine_row = df_total_covered_state[df_total_covered_state['st'] == 23]
 if not maine_row.empty:
     me_totalpop = maine_row['state_tot_pop'].values[0]
     pct_incarc_pop = maine_row['pct_incarc_pop'].values[0]
@@ -71,6 +74,8 @@ df_detailed['estimated_incar'] = df_detailed['estimated_incar'].round().astype(i
 df_detailed['per_incar'] = np.where(df_detailed['totalpop'] > 0, df_detailed['estimated_incar'] / df_detailed['totalpop'], 0)
 df_detailed['z_per_incar'] = standardize_score(df_detailed, 'per_incar')
 
+#################################################################################################################
+# Find the covered populations - Persons who are 60 years of age or older and persons with disabilities
 # S0101_C01_028E: 60 years and over
 # S1810_C02_001E: Disabled population
 
@@ -86,7 +91,7 @@ df_subject['over60'] = pd.to_numeric(df_subject['S0101_C01_028E'], errors='coerc
 df_subject['per_over60'] = np.where(df_detailed['totalpop'] > 0, df_subject['over60'] / df_detailed['totalpop'], 0)
 df_subject['z_per_over60'] = standardize_score(df_subject, 'per_over60')
 
-df_subject['dis'] = pd.to_numeric(df_subject['S1810_C02_001E'], errors='coerce') 
+df_subject['dis'] = pd.to_numeric(df_subject['S1810_C02_001E'], errors='coerce')
 df_subject['per_dis'] = np.where(df_detailed['totalpop'] > 0, df_subject['dis'] / df_detailed['totalpop'], 0)
 df_subject['z_per_dis'] = standardize_score(df_subject, 'per_dis')
 
@@ -114,90 +119,40 @@ df_minority['minority_pop'] = df_minority.iloc[:, 1:8].sum(axis=1)
 df_minority['id'] = df_minority['state'] + df_minority['county'] + df_minority['tract']
 df_minority_res = df_minority[['id', 'total_pop', 'minority_pop']]
 
-print('Members of a racial or ethnic minority group')
-print(df_minority_res.head())
-
 #################################################################################################################
 # Find the covered populations - Rural residents
 
-rural_url = responserate_table + geog_rural
-rural_response = requests.get(rural_url)
-rural_data = rural_response.json()
-df_rural_20 = pd.DataFrame(rural_data)
-set_index(df_rural_20)
+df_rural_res = pd.read_csv('data/rural_est.csv')
+df_rural_res['id'] = df_rural_res['id'].astype(str)
 
-df_rural_20 = df_rural_20.drop(columns=['P2_001NA', 'P2_002NA', 'P2_003NA', 'P2_004NA'])
-df_rural_20.rename(columns={'P2_001N': 'total_pop'}, inplace=True)
-df_rural_20.rename(columns={'P2_002N': 'urban_pop'}, inplace=True)
-df_rural_20.rename(columns={'P2_003N': 'rural_pop'}, inplace=True)
-df_rural_20.rename(columns={'P2_004N': 'not_defined'}, inplace=True)
-df_rural_20.rename(columns={'GEO_ID': 'geo_id'}, inplace=True)
-df_rural_20[['total_pop', 'urban_pop', 'rural_pop', 'not_defined']] = df_rural_20[['total_pop', 'urban_pop', 'rural_pop', 'not_defined']].apply(pd.to_numeric)
-df_rural_20['geo_id'] = df_rural_20['geo_id'].astype(str)
-df_rural_20['id'] = df_rural_20['geo_id'].apply(lambda x: x.split("US")[1][:-4])
-df_rural_20['id_block'] = df_rural_20['geo_id'].apply(lambda x: x.split("US")[1])
-
-urban_rural_pop_bool = len(df_rural_20[(df_rural_20['urban_pop'] != 0) & (df_rural_20['rural_pop'] != 0)])
-not_defined_pop_bool = len(df_rural_20[df_rural_20['not_defined'] != 0])
-if urban_rural_pop_bool == 0 and not_defined_pop_bool == 0:
-  print('Block level data can be used to assign rural/urban labels.')
-
-# assign rural labels to blocks
-df_rural_20['rural'] = np.where((df_rural_20['total_pop'] == df_rural_20['urban_pop']) & (df_rural_20['total_pop'] != 0), 0,
-                              np.where((df_rural_20['total_pop'] == df_rural_20['rural_pop']) & (df_rural_20['total_pop'] != 0), 1, None))
-
-# estimate 2022 rural residents based on 2020 data
-df_est = df_rural_20.copy()
-df_census_tract_20 = df_est.groupby('id')['total_pop'].sum().reset_index()
-df_census_tract_20.rename(columns={'total_pop': 'total_pop_20'}, inplace=True)
-
-df_census_tract_22 = df_minority.copy()
-df_census_tract_22 = df_census_tract_22[['id', 'total_pop']].copy()
-df_census_tract_22.rename(columns={'total_pop': 'total_pop_22'}, inplace=True)
-
-df_census_tract = pd.merge(df_census_tract_20, df_census_tract_22, on='id', how='inner')
-df_census_tract['id'] = df_census_tract['id'].astype(str)
-df_census_tract['total_pop_22'] = df_census_tract['total_pop_22'].astype(int)
-
-df_est_v2 = df_rural_20.copy()
-df_est_v2 = df_est_v2.merge(df_census_tract[['id', 'total_pop_20', 'total_pop_22']], on='id', how='left')
-df_est_v2['pop_block_ct'] = df_est_v2['total_pop'] / df_est_v2['total_pop_20']
-df_est_v2['est_pop'] = df_est_v2['total_pop_22'] * df_est_v2['pop_block_ct']
-est_2022_census_tract_v2 = df_est_v2.groupby('id')['est_pop'].sum().reset_index()
-est_2022_census_tract_v2.rename(columns={'est_pop':'est_total_pop_22_v2'}, inplace=True)
-df_census_tract = df_census_tract.merge(est_2022_census_tract_v2, on='id', how='left')
-rural_2022_block_v2 = df_est_v2[df_est_v2['rural'] == 1]
-rural_est_2022_census_tract_v2 = rural_2022_block_v2.groupby('id')['est_pop'].sum().reset_index()
-rural_est_2022_census_tract_v2.rename(columns={'est_pop':'est_rural_pop_22_v2'}, inplace=True)
-df_census_tract = df_census_tract.merge(rural_est_2022_census_tract_v2, on='id', how='left')
-df_census_tract['diff_est_total_22_v2'] = df_census_tract['est_total_pop_22_v2'] - df_census_tract['total_pop_22']
-df_census_tract['per_diff_est_total_22_v2'] = df_census_tract['diff_est_total_22_v2']/df_census_tract['total_pop_22']
-
-df_rural_res = df_census_tract[['id', 'est_rural_pop_22_v2']].copy()
-df_rural_res['est_rural_pop_22_v2'] = df_rural_res['est_rural_pop_22_v2'].fillna(0).round().astype(int)
-
-print('Rural residents')
-print(df_rural_res.head())
 
 #################################################################################################################
 
 # Find the covered populations - Individuals with a language barrier
-lang_code = ['B06007_005M', 'B06007_008E']
+# lang_code = ['B06007_005M', 'B06007_008E']
 
-lang_url = detailed_table + ','.join(lang_code) + geog
-df_lang = pd.read_json(lang_url)
-set_index(df_lang)
+# lang_url = detailed_table + ','.join(lang_code) + geog
+# df_lang = pd.read_json(lang_url)
+# set_index(df_lang)
 
-num_list = ['B06007_005M', 'B06007_008E']
-df_lang[num_list] = df_lang[num_list].apply(pd.to_numeric)
-df_lang['lang_pop'] = df_lang.iloc[:, 0:2].sum(axis=1)
+# num_list = ['B06007_005M', 'B06007_008E']
+# df_lang[num_list] = df_lang[num_list].apply(pd.to_numeric)
+# df_lang['lang_pop'] = df_lang.iloc[:, 0:2].sum(axis=1)
 
-df_lang['id'] = df_lang['state'] + df_lang['county'] + df_lang['tract']
+# df_lang['id'] = df_lang['state'] + df_lang['county'] + df_lang['tract']
 
-df_lang_res = df_lang[['lang_pop', 'id']]
+# df_lang_res = df_lang[['id', 'lang_pop']]
 
-print('Individuals with a language barrier')
-print(df_lang_res.head())
+
+lang_pop_state = maine_row['lang_barrier_pop'].values[0]
+pct_lang_pop_state = maine_row['pct_lang_barrier_pop'].values[0]
+
+df_lang = df_minority[['id', 'total_pop']].copy()
+df_lang['total_pop'] = df_lang['total_pop'].astype(int)
+df_lang['rate_tract_state'] = df_lang['total_pop'] / me_totalpop
+df_lang['estimated_lang'] = df_lang['rate_tract_state'] * lang_pop_state
+df_lang['estimated_lang'] = df_lang['estimated_lang'].round().astype(int)
+df_lang_res = df_lang[['id', 'estimated_lang']]
 
 #################################################################################################################
 
@@ -212,20 +167,31 @@ df_poverty.rename(columns={'S1701_C01_040E': 'poverty_pop'}, inplace=True)
 
 df_poverty['id'] = df_poverty['state'] + df_poverty['county'] + df_poverty['tract']
 
-df_poverty_res = df_poverty[['poverty_pop', 'id']]
-print('Individuals with incomes not exceeding 150 percent of poverty level')
-print(df_poverty_res.head())
+df_poverty_res = df_poverty[['id', 'poverty_pop']]
+
+# assign location name
+rural_url = responserate_table + geog_rural
+rural_response = requests.get(rural_url)
+rural_data = rural_response.json()
+df_rural_20 = pd.DataFrame(rural_data)
+set_index(df_rural_20)
+df_rural_20.rename(columns={'GEO_ID': 'geo_id'}, inplace=True)
+df_rural_20['geo_id'] = df_rural_20['geo_id'].astype(str)
+df_rural_20['id'] = df_rural_20['geo_id'].apply(lambda x: x.split("US")[1][:-4])
+df_rural_20['loc'] = df_rural_20['NAME'].str.extract(r'(Census Tract \d+(?:\.\d+)?, \w+ County)')
+df_loc = df_rural_20[['loc', 'id']].copy()
+df_loc = df_loc.drop_duplicates(subset=['id', 'loc'])
 
 # Merge the data frames
 df_se2 = pd.merge(df_minority_res, df_lang_res, on='id', how='inner')
 df_se2 = pd.merge(df_se2, df_poverty_res, on='id', how='inner')
 df_se2 = pd.merge(df_se2, df_rural_res, on='id', how='inner')
 
-df_se2[['total_pop', 'minority_pop', 'lang_pop', 'poverty_pop', 'est_rural_pop_22_v2']] = df_se2[['total_pop', 'minority_pop', 'lang_pop', 'poverty_pop', 'est_rural_pop_22_v2']].apply(pd.to_numeric)
+df_se2[['total_pop', 'minority_pop', 'estimated_lang', 'poverty_pop', 'est_rural_pop_22_v2']] = df_se2[['total_pop', 'minority_pop', 'estimated_lang', 'poverty_pop', 'est_rural_pop_22_v2']].apply(pd.to_numeric)
 df_se2['per_minority_pop'] = np.where(df_se2['total_pop'] > 0, df_se2['minority_pop'] / df_se2['total_pop'], 0)
 df_se2['z_per_minority_pop'] = standardize_score(df_se2, 'per_minority_pop')
 
-df_se2['per_lang_pop'] = np.where(df_se2['total_pop'] > 0, df_se2['lang_pop'] / df_se2['total_pop'], 0)
+df_se2['per_lang_pop'] = np.where(df_se2['total_pop'] > 0, df_se2['estimated_lang'] / df_se2['total_pop'], 0)
 df_se2['z_per_lang_pop'] = standardize_score(df_se2, 'per_lang_pop')
 
 df_se2['per_poverty_pop'] = np.where(df_se2['total_pop'] > 0, df_se2['poverty_pop'] / df_se2['total_pop'], 0)
@@ -235,14 +201,49 @@ df_se2['per_est_rural_pop_22_v2'] = np.where(df_se2['total_pop'] > 0, df_se2['es
 df_se2['z_per_est_rural_pop_22_v2'] = standardize_score(df_se2, 'per_est_rural_pop_22_v2')
 
 df_se = pd.merge(df_se1, df_se2, on='id', how='inner')
+df_se = pd.merge(df_se, df_loc, on='id', how='inner')
 
 # calculate SE score
 
-df_se['SE'] = round(df_se['z_per_incar'] + df_se['z_per_vet'] + df_se['z_per_over60']
-                    + df_se['z_per_dis'] + df_se['z_per_minority_pop'] + df_se['z_per_lang_pop']
-                    + df_se['z_per_poverty_pop'] + df_se['z_per_est_rural_pop_22_v2'], 2)
+df_se['SE'] = df_se['z_per_incar'] + df_se['z_per_vet'] + df_se['z_per_over60'] + df_se['z_per_dis'] + df_se['z_per_minority_pop'] + df_se['z_per_lang_pop'] + df_se['z_per_poverty_pop'] + df_se['z_per_est_rural_pop_22_v2']
 
 df_se['SE_normed'] = 100*(df_se['SE']-df_se['SE'].min())/(df_se['SE'].max()-df_se['SE'].min())
 
-df_se.to_csv('data/SE.csv', index=False)
+# drop column
+df_se = df_se.drop(columns=['total_pop'])
 
+# check top census tracts
+df_vet_res_top = df_se[['vet', 'SE_normed', 'loc']].sort_values(by='vet', ascending = False, inplace=False)
+df_incar_res_top = df_se[['estimated_incar', 'SE_normed', 'loc']].sort_values(by='estimated_incar', ascending = False, inplace=False)
+df_over60_res_top = df_se[['over60', 'SE_normed', 'loc']].sort_values(by='over60', ascending = False, inplace=False)
+df_dis_res_top = df_se[['dis', 'SE_normed', 'loc']].sort_values(by='dis', ascending = False, inplace=False)
+df_minority_res_top = df_se[['minority_pop', 'SE_normed', 'loc']].sort_values(by='minority_pop', ascending = False, inplace=False)
+df_rural_res_top = df_se[['est_rural_pop_22_v2', 'SE_normed', 'loc']].sort_values(by='est_rural_pop_22_v2', ascending = False, inplace=False)
+df_lang_res_top = df_se[['estimated_lang', 'SE_normed', 'loc']].sort_values(by='estimated_lang', ascending = False, inplace=False)
+df_poverty_res_top = df_se[['poverty_pop', 'SE_normed', 'loc']].sort_values(by='poverty_pop', ascending = False, inplace=False)
+
+print('Top census tracts')
+print('Persons who are 60 years of age or older')
+print(df_over60_res_top.head())
+
+print('Incarcerated individuals')
+print(df_incar_res_top.head())
+
+print('Veterans')
+print(df_vet_res_top.head())
+
+print('Persons with disabilities')
+print(df_dis_res_top.head())
+
+print('Members of a racial or ethnic minority group')
+print(df_minority_res_top.head())
+
+print('Rural residents')
+print(df_rural_res_top.head())
+
+print('Individuals with a language barrier')
+print(df_lang_res_top.head())
+
+print('Individuals with incomes not exceeding 150 percent of poverty level')
+print(df_poverty_res_top.head())
+df_se.to_csv('data/SE.csv', index=False)
