@@ -27,13 +27,14 @@ for score in scores:
 
     new_gdf = gdf.merge(df_data[['GEOID', score, 'title']], on='GEOID', how='left')
     new_wm = new_gdf.to_crs(epsg=3857)
-    
+
     percentiles = np.percentile(new_gdf[score].dropna(), np.arange(0, 101, 10))
     norm = mpl.colors.BoundaryNorm(boundaries=percentiles, ncolors=256)
     cmap = mpl.cm.RdYlGn_r
     
     ax = new_wm.plot(score, legend=True, norm=norm, cmap=cmap)
     new_wm.boundary.plot(ax=ax, linewidth=0.2, edgecolor='#333')
+
     plt.gcf().set_size_inches(10, 10)
     plt.title(label=score + " scores per census tract")
     plt.savefig('figs/'+score+'_tract.png', dpi=300)

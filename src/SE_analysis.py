@@ -60,16 +60,5 @@ common_results_10 = compare_sets(10)
 common_results_20 = compare_sets(20)
 common_results_50 = compare_sets(50)
 
-df_num = df_se[['z_per_incar', 'z_per_vet', 'z_per_over60', 'z_per_dis', 'z_per_minority_pop', 'z_per_lang_pop', 'z_per_poverty_pop', 'z_per_est_rural_pop_22_v2', 'SE_normed']].copy()
-
-corr = df_num.corr()
-print('Correlation:\n', corr)
-
-sns.heatmap(corr, annot=True, fmt='.2f',)
-plt.title('Visualization')
-plt.tight_layout()
-plt.savefig('figs/corr.png')
-plt.show()
-
 
 

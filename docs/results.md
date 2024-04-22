@@ -1,5 +1,5 @@
 # 2022 Digital Divide Index
-In this project, we calculated 2022 Digital Divide Index for Maine and visualized DDI based on the newly defined "covered populations" in the [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html).
+In this project, we calculated 2022 Digital Divide Index for Maine and visualized DDI based on the newly defined "covered populations" in the [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html). 
 
 The Digital Divide Index consists of two scores, the infrastructure/adoption (INFA) score and the socioeconomic (SE) score. 
 
@@ -29,6 +29,8 @@ Below are the top 5 areas with the highest SE scores.
 334   95.841617      Census Tract 9551, Washington County
 307   93.260229     Census Tract 9653.02, Somerset County
 ```
+- Because we used Min-Max normalization, the larget value of `SE` becomes 100.
+
 The visualization is attached below.
 <img src='../figs/SE_normed_tract.png'>
 
@@ -152,7 +154,7 @@ To check the result of the analysis, the following commanded is executed.
 make SE_analysis
 ```
 
-The command prints out the overlapping parts in the lists and also visualizes the potential correlations between these eight covered populations.
+The command prints out the overlapping parts in the lists when the number of overlapping elements is greater than half of the length of the list. 
 ```
 Top 5 Comparison
 ------------------------------------------
@@ -199,11 +201,14 @@ Top 50 Comparison
 27 common locations between Rural and Language
 ```
 
-<img src='../figs/corr.png'>
+- The common locations between Incarcerated and Language are shown in top 5/10/20/50 list comparisons. The major reason might be that we used the same technique to estimate incarcerated populations and language barrier populations.
+- The pair `Disabled and Poverty` is shown in top 10/20/50 list comparisons. 
 
 ### DDI
 
 ## Next Step
+- Based on the overlap, we can furthur analyze the most affected areas and potential correlations between eight covered populations. 
+- To ensure that the fund and resource are allocated effectively, it's important to understand the specific issue in each area. For example, a high SE score doesn't tell us what kind of help is more important in this area. 
 
 
 
