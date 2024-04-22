@@ -1,25 +1,44 @@
 import pandas as pd
 
-def print_geoid_and_pct(filename):
+def print_geoid_and_pct_from_csv(filename):
     """
-    Read an Excel file and print 'geo_id' and 'pct_no_bb_or_computer_pop' columns for rows where 'geo_id' starts with '230'.
+    Read a CSV file and calculate the percentage of population without internet access (NIA)
+    and without computing devices (NCD) for rows where 'GEO_ID' starts with '1400000US230'.
     Save the same data to a txt file.
     
-    :param filename: The path to the county_tract_total_covered_populations.xlsx file.
+    :param filename: The path to the CSV file.
     """
-    # Read the Excel file
-    population_df = pd.read_excel(filename, sheet_name=1)
+    # Read the CSV file
+    population_df = pd.read_csv(filename)
+    
+    # Filter rows where 'GEO_ID' starts with '1400000US230'
+    filtered_df = population_df[population_df['GEO_ID'].astype(str).str.startswith('1400000US230')].copy()
+    
+    # Correctly modify a column in place using .loc
+    filtered_df.loc[:, 'GEO_ID'] = filtered_df['GEO_ID'].str.replace('1400000US', '')
+    
+    # Replace non-convertible values with NaN before converting to float
+    filtered_df['S2802_C07_001E'] = pd.to_numeric(filtered_df['S2802_C07_001E'], errors='coerce')
+    filtered_df['S2802_C05_001E'] = pd.to_numeric(filtered_df['S2802_C05_001E'], errors='coerce')
+    
+    # Calculate NIA and NCD
+    filtered_df['NIA'] = filtered_df['S2802_C07_001E'] + filtered_df['S2802_C05_001E']
+    filtered_df['NCD'] = filtered_df['S2802_C07_001E']
+    
+    # Select only relevant columns
+    relevant_df = filtered_df[['GEO_ID', 'NIA', 'NCD']]
+    
+    # Rename columns for clarity
+    relevant_df.columns = ['geo_id', 'pct_no_internet', 'pct_no_computer']
+    
+    # Print 'geo_id', 'pct_no_internet', and 'pct_no_computer'
+    print(relevant_df)
+    
+    # Save 'geo_id', 'pct_no_internet', and 'pct_no_computer' to a txt file
+    relevant_df.to_csv('data/population_pct_analysis.txt', index=False, sep='\t')
 
-    # Filter rows where 'geo_id' starts with '230'
-    filtered_df = population_df[population_df['geo_id'].astype(str).str.startswith('230')]
+# The path to the CSV file
+file_path = 'data/ACSST5Y2022.S2802-Data.csv'
 
-    # Print 'geo_id' and 'pct_no_bb_or_computer_pop'
-    print(filtered_df[['geo_id', 'pct_no_bb_or_computer_pop']])
-
-    # Save 'geo_id' and 'pct_no_bb_or_computer_pop' to a txt file
-    filtered_df[['geo_id', 'pct_no_bb_or_computer_pop']].to_csv('data/population.txt', index=False, sep='\t')
-
-
-excel_file_path = "data/county_tract_total_covered_populations.xlsx" 
-
-print_geoid_and_pct(excel_file_path)
+# Call the function
+print_geoid_and_pct_from_csv(file_path)

@@ -62,23 +62,23 @@ Maine's number in the table: 23
 ### INFA (infrastructure/adoption)
 In order to print the INFA results, use command:
 ```
-make -f data
+make data
 ```
 This will download data.
 ```
-make -f speed
+make speed
 ```
 This is for calculate average downlaod and upload speed
 ```
-make -f population
+make population
 ```
 For calculate percentage of populaiton can't access to network or compute device.
 ```
-make -f INFA
+make INFA
 ```
 To calculate INFA 
 ```
-make -f maps
+make maps
 ```
 To combine INFA and geo data and make maps by geo id.
 
