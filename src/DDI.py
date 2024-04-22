@@ -5,7 +5,12 @@ infa_df = pd.read_csv("data/infa_scaled.csv")
 se_df = pd.read_csv("data/SE.csv")
 
 # Merge the dataframes on the 'id' column
-maine_df = pd.merge(infa_df, se_df, on='id', how='inner')
+#maine_df = pd.merge(infa_df, se_df, on='id', how='inner')
+
+infa_df['id'] = infa_df['id'].astype(str)
+infa_df = infa_df.drop_duplicates(subset='id')
+se_df['id'] = se_df['id'].astype(str)
+maine_df = pd.merge(infa_df[['id', 'INFA_scaled']], se_df[['id', 'SE_normed']], on='id', how='inner')
 
 # Calculate DDI as the sum of INFA_scaled and SE_normed scores
 maine_df['DDI'] = maine_df['INFA_scaled'] + maine_df['SE_normed']
