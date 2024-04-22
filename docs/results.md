@@ -198,11 +198,18 @@ The visualization is attached below.
 ### Visualization
 - DDI vs. INFA vs. SE
      - The DDI map and INFA map have more similar distributions. 
-- Eight Covered populations
-     - 
+- Eight Covered populations (percentage used)
+     - More older people live close the coast or close to the north regions.
+     - Incarcerated individual population is hard to identify a clear pattern.
+     - The distribution of veterans has some similarities with the distribution of older people.
+     - There're more persons with disabilities in the north regions. 
+     - The minority population shows a very different distribution. Many of them live close to the coast.
+     - The distribution of rural population clearly illustrates that most of regions in Maine are rural.
+     - The distribution of people with language barriers is similar to the distribution of incarcerated individuals. 
+     - The distribution related to poverty indicates that people living close to the coast are relatively richer.
 
 ### Top N area list comparison
-Based on the observation of the top 5 areas lists, we saw some areas shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
+Based on the observation of the top 5 areas lists, we saw some areas repeatedly shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
 
 To check the result of the analysis, the following commanded is executed.
 ```
@@ -220,22 +227,6 @@ Top 10 Comparison
 10 common locations between Incarcerated and Language
 ------------------------------------------
 5 common locations between Disabled and Poverty
-
-Top 20 Comparison
-------------------------------------------
-10 common locations between Over 60 and Incarcerated
-------------------------------------------
-10 common locations between Over 60 and Veterans
-------------------------------------------
-11 common locations between Over 60 and Language
-------------------------------------------
-10 common locations between Incarcerated and Rural
-------------------------------------------
-17 common locations between Incarcerated and Language
-------------------------------------------
-10 common locations between Disabled and Poverty
-------------------------------------------
-10 common locations between Rural and Language
 
 Top 50 Comparison
 ------------------------------------------
@@ -256,14 +247,16 @@ Top 50 Comparison
 27 common locations between Rural and Language
 ```
 
-- The common locations between Incarcerated and Language are shown in top 5/10/20/50 list comparisons. The major reason might be that we used the same technique to estimate incarcerated populations and language barrier populations.
-- The pair `Disabled and Poverty` is shown in top 10/20/50 list comparisons. 
-
-### DDI
+- The common locations between Incarcerated and Language are shown in top 5/10/50 list comparisons. The major reason might be that we used the same technique to estimate incarcerated populations and language barrier populations.
+- The pair `Disabled and Poverty` is shown in top 10/50 list comparisons. 
+- Using this type of comparison can help us understand the specific problem in each area. 
 
 ## Next Step
-- Based on the overlap, we can furthur analyze the most affected areas and potential correlations between eight covered populations. 
-- To ensure that the fund and resource are allocated effectively, it's important to understand the specific issue in each area. For example, a high SE score doesn't tell us what kind of help is more important in this area. 
+- Some of the data (language barrier, incarcerated, rural) is inaccurate because we used some estimation techniques. Therefore, one possible improvement is collecting more reliable data. Also, using a validation step to evaluate our data can be helpful and necessary.
+- Not all census tracts are implemented. 
+- Based on more overlap comparisons, we can furthur analyze the most affected areas and potential correlations between eight covered populations. 
+- To ensure that the fund and resource are allocated effectively, it's important to understand the specific issue in each area. For example, a high SE score doesn't tell us what kind of help is more important in this area.
+- The maps can only show the overall distribution; however, they fail to provide more specific information. Therefore, using a interactive table to explore data can be helpful to understand the issue and create plans.
 
 
 
