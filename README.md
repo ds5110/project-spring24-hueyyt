@@ -9,78 +9,85 @@ github username:PennyY1103
 github username:hanasu061
 
 ## Data source
-According to the [Purdue's 2021 Digital Divide Index](https://storymaps.arcgis.com/stories/8ad45c48ba5c43d8ad36240ff0ea0dc7), we need two parts: INFA and SE.
+* According to the [Purdue's 2021 Digital Divide Index](https://storymaps.arcgis.com/stories/8ad45c48ba5c43d8ad36240ff0ea0dc7), we need two parts: INFA and SE.
 
-INFA data comes from the [FCC broadband data collection](https://www.fcc.gov/BroadbandData).
+* INFA data comes from the [FCC broadband data collection](https://www.fcc.gov/BroadbandData).
 
-SE data comes from the [American Community Survey 5-Year Data (2009-2022)](https://www.census.gov/data/developers/data-sets/acs-5year.html).
-We used detailed tables, subject tables, data profiles and comparsion profiles.
-Detailed Tables contain the most detailed cross-tabulations, many of which are published down to block groups. The data are population counts.
-Subject Tables provide an overview of the estimates available in a particular topic.  The data are presented as population counts and percentages. 
-Maine's number in the table: 23
-* Persons who are 60 years of age or older
-  * Subject tables: S0101_C01_028E
-  * Estimate!!Total!!Total population!!SELECTED AGE CATEGORIES!!60 years and over
+* SE data comes from the [American Community Survey 5-Year Data (2009-2022)](https://www.census.gov/data/developers/data-sets/acs-5year.html).
+  * We used detailed tables, subject tables, data profiles and comparsion profiles.
+  * Detailed Tables contain the most detailed cross-tabulations, many of which are published down to block groups. The data are population counts.
+  * Subject Tables provide an overview of the estimates available in a particular topic.  The data are presented as population counts and percentages. 
+  * Maine's number in the table: 23
+  * Persons who are 60 years of age or older (Subject tables)
 
-* Incarcerated individuals
-  ** Used 2022 State Data in [Digital Equity Act of 2021 (census.gov)](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html).
-  ** It has total population of Maine state and percentage of incarcerated population.
-  ** estimated incarcerated population in Maine = state_tot_pop * pct_incarc_pop
-  ** proportion = num of people in each tract / total population in Maine
-  ** estimated incarcerated population in each tract = estimated incarcerated population in Maine * proportion
+  * Incarcerated individuals
+    * Used 2022 State Data in [Digital Equity Act of 2021 (census.gov)](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html).
+    * It has total population of Maine state and percentage of incarcerated population.
+    * estimated incarcerated population in Maine = state_tot_pop * pct_incarc_pop
+    * proportion = num of people in each tract / total population in Maine
+    * estimated incarcerated population in each tract = estimated incarcerated population in Maine * proportion
 
-* Veterans
-  ** Detailed table: B21001_002E
-  ** Estimate!!Total:!!Veteran
+  * Veterans (Detailed table)
 
-* Persons with disabilities
-  ** Subject table: S1810_C02_001E
-  ** Estimate!!Total!!Total civilian noninstitutionalized population	Disability Characteristics
+  * Persons with disabilities (Subject table)
 
-* Members of a racial or ethnic minority group
-  * _(def)_ The population who identify as a race other than White alone or as Hispanic or Latino of any
-    race
-  * _(data source)_ American Community Survey B01001(Sex by Age) 2022 5-Year Estimates Detailed Tables
+  * Members of a racial or ethnic minority group
+    * _(def)_ The population who identify as a race other than White alone or as Hispanic or Latino of any
+      race
+    * _(data source)_ American Community Survey B01001(Sex by Age) 2022 5-Year Estimates Detailed Tables
 
-* Rural residents
-  * _(def)_ The rural population, as defined by the Digital Equity Act of 2021, is the population living
-    outside of cities and towns with more than 20,000 residents or living outside larger cities and
-    towns with more than 50,000 residents and their surrounding urban areas.
-  * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data, 2019 County and Census Tract Data, and American Community Survey P2(Urban and Rural) 2020 Congressional District Summary File
+  * Rural residents
+    * _(def)_ The rural population, as defined by the Digital Equity Act of 2021, is the population living
+      outside of cities and towns with more than 20,000 residents or living outside larger cities and
+      towns with more than 50,000 residents and their surrounding urban areas.
+    * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data, 2019 County and Census Tract Data, and American Community Survey P2(Urban and Rural) 2020 Congressional District Summary File
 
-* Individuals with a language barrier, including those who are English learners or have low literacy levels
-  * _(def)_ English learners or have low literacy levels. English learners are defined as individuals who
-    speak a language other than English at home and speak English less than “very well.”
-  * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data
+  * Individuals with a language barrier, including those who are English learners or have low literacy levels
+    * _(def)_ English learners or have low literacy levels. English learners are defined as individuals who
+      speak a language other than English at home and speak English less than “very well.”
+    * _(data source)_ [Digital Equity Act of 2021](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) 2022 State Data
 
-* Individuals living in households with incomes not exceeding 150 percent of the poverty level
-  * _(def)_ Households with income no more than 150 percent of the federal poverty threshold.
-  * American Community Survey S1701(Poverty Status in the Past 12 Months) 2022 5-Year Estimates Subject Tables
+  * Individuals living in households with incomes not exceeding 150 percent of the poverty level
+    * _(def)_ Households with income no more than 150 percent of the federal poverty threshold.
+    * American Community Survey S1701(Poverty Status in the Past 12 Months) 2022 5-Year Estimates Subject Tables
 
 ## Data processing
 
 ### INFA (infrastructure/adoption)
-In order to print the INFA results, use command:
+In order to print the INFA results, please use the following commands:
 ```
 make data
 ```
-This will download data.
+This command will download data about INFA.
 ```
 make speed
 ```
-This is for calculate average downlaod and upload speed
+This is for calculate average downlaod and upload speed. 
+It will output a file named speed.txt.
 ```
 make population
 ```
 For calculate percentage of populaiton can't access to network or compute device.
+It will output a file named population_pct_analysis.txt.
 ```
 make INFA
 ```
-To calculate INFA 
+To calculate INFA. It will output a file named infa_scaled.csv.
+This is the first head of output.
+```
+              id  INFA_scaled
+0    23001010100   100.000000
+1    23001010100   100.000000
+2    23001010200     7.227720
+3    23001010200     7.227720
+4    23001010300    46.613047
+```
+
 ```
 make maps
 ```
 To combine INFA and geo data and make maps by geo id.
+It will output a file named INFA_scaled_tract.png.
 
 ### SE (socioeconomic)
 First of all, the `openpyxl` package needs to be installed so that excel files can be read. The following command is used to install `openpyxl`.
@@ -115,6 +122,25 @@ make SE
 ```
 - The output will be the top 5 areas(census tracts) in each type of covered populations. The result will be discussed in [results.md].
 
+```
+make SE_map
+```
+To combine SE and geo data and make maps by geo id.
+It will output a file named SE_normed_tract.png.
+
+### DDI (INFA + SE)
+```
+make DDI
+```
+In this step, we calculate the DDI of the each tract, delete the duplicates and scale DDI score to range 0 to 100.
+It will output a file named DDI.csv.
+
+```
+make DDI_map
+```
+This command will output the DDI map of Maine.
+The result file is named DDI_scaled_tract.png.
+
 
 ## Visualization
 INFA MAP:
@@ -129,11 +155,20 @@ In the SE results, the south parts where are close to Portland and have more pop
 ## Challenge
 The major challenge is the data collection step. 
 * Incarcerated individuals
-  ** The data cannot be find directly in the American Community Survey. In the census.gov, after choosing Population and People -> Counts, Estimates, and Projections -> Group Quarters Population -> B26103 Group Quarters Type(3 types), we can get Adult correctional facilities which is 3350. It's a estimated data and we cannot get the data of each tract.
-  ** In the [National Institute Corrections](https://nicic.gov/resources/nic-library/state-statistics/2021/maine-2021), we can get the corrections state statistics information of Maine in 2021. 
-  ** In the National Institute Correction, Prison Population: 1,473, Jail Population: 1,411, Parole Population: 17, Probation Population: 5,303.
-  ** The data in NIC and census.gov excludes Federal facilities.
-  ** The number of incarcerated people in Maine and each tract is estimated.
+  * The data cannot be find directly in the American Community Survey. In the census.gov, after choosing Population and People -> Counts, Estimates, and Projections -> Group Quarters Population -> B26103 Group Quarters Type(3 types), we can get Adult correctional facilities which is 3350. It's a estimated data and we cannot get the data of each tract.
+  * In the [National Institute Corrections](https://nicic.gov/resources/nic-library/state-statistics/2021/maine-2021), we can get the corrections state statistics information of Maine in 2021. 
+  * In the National Institute Correction, Prison Population: 1,473, Jail Population: 1,411, Parole Population: 17, Probation Population: 5,303.
+  * The data in NIC and census.gov excludes Federal facilities.
+  * The number of incarcerated people in Maine and each tract is estimated.
 
 * Rural
   * Rural residents data is incomplete because rural residents data (2018-2022) can not be found. [H2 Urban and Rural Table](https://data.census.gov/table/DECENNIALDHC2020.H2?q=rural&g=040XX00US23$1400000) might be added but it only contains data in 2020. 
+
+## References
+  * [Purdue's 2021 Digital Divide Index](https://storymaps.arcgis.com/stories/8ad45c48ba5c43d8ad36240ff0ea0dc7)
+  * Socioeconomic data from the [American Community Survey (ACS)](https://www.census.gov/programs-surveys/acs)
+  at the U.S. Census. 
+  * Broadband data come from the [FCC broadband data collection](https://www.fcc.gov/BroadbandData).
+  * [Digital Equity Act of 2021 (census.gov)](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes data about covered populations.
+  * The [Infrastructure Investments and Job Act (IIJA)](https://www.whitehouse.gov/briefing-room/statements-releases/2021/11/06/fact-sheet-the-bipartisan-infrastructure-deal/) and
+  * [DS 5010 most recent project](https://ds5010.github.io/broadband-3/)
