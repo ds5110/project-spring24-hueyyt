@@ -10,7 +10,7 @@ data:
 	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_Copper_fixed_broadband_J23_05mar2024.zip
 	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_FibertothePremises_fixed_broadband_J23_05mar2024.zip
 	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/bdc_23_LicensedFixedWireless_fixed_broadband_J23_05mar2024.zip
-	cd data; curl -LO https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/county_tract_total_covered_populations.xlsx
+	cd data; curl -LO https://raw.githubusercontent.com/hueyyt/INFA/main/ACSST5Y2022.S2802-Data.csv
 
 img:
 	mkdir -p img
@@ -42,6 +42,12 @@ SE_map:
 # analyze SE score
 SE_analysis:
 	python -B src/SE_analysis.py
+
+DDI:
+	python -B src/DDI.py
+
+DDI_map:
+	python -B src/DDI_map.py
 
 clean-data:
 	rm -rf data

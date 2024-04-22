@@ -19,24 +19,30 @@ df_data['county'] = df_data['id'].apply(lambda x: str(x)[2:5] + str(x)[-4:])
 df_data['GEOID'] = df_data['id'].astype(str)
 df_data.drop(columns=['id'], inplace=True)
 
-scores = ['DDI_scaled']
+score = ['DDI_scaled']
+df_data = pd.read_csv('data/DDI.csv', index_col=None)
 
-for score in scores:
-    df_data['title'] = df_data['county'].apply(lambda x: diction[x[:3]]['name'] + "\ntract:" + x[-4:] if x[:3] in diction else "N/A")
-    df_data['title'] = df_data['title'] + "\n" + df_data[score].round(2).astype(str)
+del df_data[df_data.columns[0]]
+df_data['county'] = df_data['id'].apply(lambda x: str(x)[2:5] + str(x)[-4:])
+df_data['title'] = df_data['county'].apply(lambda x: diction[x[:3]]['name'] + "\ntract:" + x[-4:] if x[:3] in diction else NA)
+df_data['title'] = df_data['title'] + "\n" + round(df_data[score], 2).astype(str)
+df_data['GEOID'] = df_data['id'].astype(str)
+df_data.drop(columns=['id'], inplace=True)
 
-    new_gdf = gdf.merge(df_data[['GEOID', score, 'title']], on='GEOID', how='left')
-    new_wm = new_gdf.to_crs(epsg=3857)
-    
-    percentiles = np.percentile(new_gdf[score].dropna(), np.arange(0, 101, 10))
-    norm = mpl.colors.BoundaryNorm(boundaries=percentiles, ncolors=256)
-    cmap = mpl.cm.RdYlGn_r
-    
-    ax = new_wm.plot(score, legend=True, norm=norm, cmap=cmap)
-    new_wm.boundary.plot(ax=ax, linewidth=0.2, edgecolor='#333')
-    plt.gcf().set_size_inches(10, 10)
-    plt.title(label=score + " scores per census tract")
-    plt.savefig('figs/'+score+'_tract.png', dpi=300)
-    plt.show()
-    plt.close()
-    print("Plot saved to figs/" + score + "_tract.png \n")
+new_gdf = gdf.merge(df_data[['GEOID', score, 'title']], on='GEOID', how='left')
+new_gdf.to_file('docs/'+score+'.json', driver="GeoJSON")
+print('Saving '+score+' GeoJSON data to docs/'+score+'.json')
+
+new_wm = new_gdf.to_crs(epsg=3857)
+print('Plotting ' + score + ' scores on map')
+bounds = np.array([0, 10, 20, 30, 40, 50, 60, 70, 80, 90])
+norm = mpl.colors.BoundaryNorm(boundaries=bounds, ncolors=256)
+cmap = mpl.cm.RdYlGn_r
+ax = new_wm.plot(score, legend=True, norm=norm, cmap=cmap)
+new_wm.boundary.plot(ax=ax, linewidth=0.2, edgecolor='#333')
+plt.gcf().set_size_inches(10, 10)
+plt.title(label=score + " scores per census tract")
+plt.savefig('figs/'+score+'_tract.png', dpi=300)
+plt.show()
+print("Plot saved to figs/" + score + "_tract.png \n")
+plt.close()
