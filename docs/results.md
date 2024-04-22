@@ -193,7 +193,15 @@ Below are the top 5 areas with the largest number of individuals living in house
 The visualization is attached below.
 <img src='../figs/per_poverty_pop_tract.png'>
 
-#### Furthur Analysis
+## Furthur Analysis
+
+### Visualization
+- DDI vs. INFA vs. SE
+     - The DDI map and INFA map have more similar distributions. 
+- Eight Covered populations
+     - 
+
+### Top N area list comparison
 Based on the observation of the top 5 areas lists, we saw some areas shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
 
 To check the result of the analysis, the following commanded is executed.

@@ -250,4 +250,6 @@ print(df_lang_res_top.head())
 
 print('Individuals with incomes not exceeding 150 percent of poverty level')
 print(df_poverty_res_top.head())
+
+print(df_se['SE_normed'].min())
 df_se.to_csv('data/SE.csv', index=False)
