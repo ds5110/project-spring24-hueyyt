@@ -4,6 +4,12 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# DDI scores
+df_ddi = pd.read_csv('data/DDI.csv')
+df_ddi_top = df_ddi[['id', 'DDI_scaled']].sort_values(by='DDI_scaled', ascending = False, inplace=False)
+print('Top 5 census tracts with the highest DDI score:\n')
+print(df_ddi_top.head())
+
 # INFA scores
 df_infa = pd.read_csv('data/infa_scaled.csv')
 df_infa = df_infa.drop_duplicates(subset='id')

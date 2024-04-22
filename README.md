@@ -172,3 +172,5 @@ The major challenge is the data collection step.
   * [Digital Equity Act of 2021 (census.gov)](https://www.census.gov/programs-surveys/community-resilience-estimates/partnerships/ntia/digital-equity.html) includes data about covered populations.
   * The [Infrastructure Investments and Job Act (IIJA)](https://www.whitehouse.gov/briefing-room/statements-releases/2021/11/06/fact-sheet-the-bipartisan-infrastructure-deal/) and
   * [DS 5010 most recent project](https://ds5010.github.io/broadband-3/)
+
+  - Because we used Min-Max normalization, the larget value of `SE` becomes 100.

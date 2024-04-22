@@ -6,6 +6,24 @@ The Digital Divide Index consists of two scores, the infrastructure/adoption (IN
 **Note**: area and census tract are used interchangably in this result reprot. 
 
 ## Result
+
+### DDI part
+According to [2022 Digital Divide Index (DDI)](https://storymaps.arcgis.com/stories/8ad45c48ba5c43d8ad36240ff0ea0dc7) posted by Purdue University, the DDI score measures physical access/adoption and socioeconomic characteristics that may limit motivation, skills, and usage. A higher DDI indicates a higher digital divide.
+
+Below are the top 5 areas with the highest DDI scores. 
+```
+              id  DDI_scaled
+0    23001010100  100.000000
+14   23001020402   93.863754
+8    23001020100   90.144678
+189  23011021000   84.787493
+327  23027046002   84.110428
+```
+- Most of the ids are shown in the top 5 areas with the highest INFA scores. However, only one of the ids is shown in the top 5 areas with the highest SE scores. 
+
+Below is the map illustrating DDI scores.
+<img src='../figs/DDI_scaled_tract.png'>
+
 ### INFA part
 The INFA score consists of four variables related to broadband infrastructure and adoption. 
 
@@ -28,6 +46,9 @@ Below are the top 5 areas with the highest INFA scores.
 
 Below is the INFA score map. 
 <img src='../figs/INFA_scaled_tract.png'>
+
+- In this figure, areas with red color have higher INFA scores while areas with green color have lower INFA scores. A higher INFA score indicates that more broadband infrastructure need to be improved. 
+- Areas close to the coast have relatively lower INFA scores. 
 
 
 ### SE part
@@ -53,10 +74,11 @@ Below are the top 5 areas with the highest SE scores.
 334   95.841617      Census Tract 9551, Washington County  23029955100
 307   93.260229     Census Tract 9653.02, Somerset County  23025965302
 ```
-- Because we used Min-Max normalization, the larget value of `SE` becomes 100.
 
-The visualization is attached below.
+The SE score visualization is attached below.
 <img src='../figs/SE_normed_tract.png'>
+
+- In this figure, areas close to the coast have relatively lower SE scores. 
 
 #### Persons who are 60 years of age or older
 Below are the top 5 areas with the largest number of persons who are 60 years of age or older.
