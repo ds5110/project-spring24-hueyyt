@@ -40,8 +40,8 @@ SE_map:
 	python -B src/SE_map.py
 
 # analyze SE score
-SE_analysis:
-	python -B src/SE_analysis.py
+analysis:
+	python -B src/analysis.py
 
 DDI:
 	python -B src/DDI.py

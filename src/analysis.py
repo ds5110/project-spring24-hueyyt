@@ -4,6 +4,14 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# INFA scores
+df_infa = pd.read_csv('data/infa_scaled.csv')
+df_infa = df_infa.drop_duplicates(subset='id')
+df_infa_top = df_infa[['id', 'INFA_scaled']].sort_values(by='INFA_scaled', ascending = False, inplace=False)
+print('Top 5 census tracts with the highest infa score:\n')
+print(df_infa_top.head())
+
+# SE scores
 df_se = pd.read_csv('data/SE.csv')
 print(df_se.info())
 
@@ -57,7 +65,6 @@ def compare_sets(top):
 
 common_results_5 = compare_sets(5)
 common_results_10 = compare_sets(10)
-common_results_20 = compare_sets(20)
 common_results_50 = compare_sets(50)
 
 

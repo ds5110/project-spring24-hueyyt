@@ -3,8 +3,28 @@ In this project, we calculated 2022 Digital Divide Index for Maine and visualize
 
 The Digital Divide Index consists of two scores, the infrastructure/adoption (INFA) score and the socioeconomic (SE) score. 
 
+**Note**: area and census tract are used interchangably in this result reprot. 
+
 ## Result
 ### INFA part
+The INFA score consists of four variables related to broadband infrastructure and adoption. 
+
+The four variables includes:
+- percent of homes without a computing device (desktops, laptops, smartphones, tablets, etc.)
+- percent of homes with no internet access (have no internet subscription, including cellular data plans or dial-up)
+- average download
+- average upload speeds in Megabits per second (Mbps) weighted by number of speed tests based Ookla Speedtest® open dataset
+
+Below are the top 5 areas with the highest INFA scores.
+```
+              id  INFA_scaled
+0    23001010100   100.000000
+359  23027046002    95.514704
+221  23011021000    89.753659
+86   23003952700    86.056359
+16   23001020100    85.309379
+```
+
 
 ### SE part
 The SE score consists of eight variables that are the percentages of eight "covered populations" defined in the Digital Equity Act of 2021.
@@ -22,12 +42,12 @@ The eight "covered populations" includes:
 #### SE
 Below are the top 5 areas with the highest SE scores. 
 ```
-      SE_normed                                       loc
-288  100.000000       Census Tract 9400, Penobscot County
-13    99.281702  Census Tract 204.01, Androscoggin County
-14    97.544519  Census Tract 204.02, Androscoggin County
-334   95.841617      Census Tract 9551, Washington County
-307   93.260229     Census Tract 9653.02, Somerset County
+       SE_normed                                       loc           id
+288  100.000000       Census Tract 9400, Penobscot County  23019940000
+13    99.281702  Census Tract 204.01, Androscoggin County  23001020401
+14    97.544519  Census Tract 204.02, Androscoggin County  23001020402
+334   95.841617      Census Tract 9551, Washington County  23029955100
+307   93.260229     Census Tract 9653.02, Somerset County  23025965302
 ```
 - Because we used Min-Max normalization, the larget value of `SE` becomes 100.
 
@@ -37,12 +57,12 @@ The visualization is attached below.
 #### Persons who are 60 years of age or older
 Below are the top 5 areas with the largest number of persons who are 60 years of age or older.
 ```
-     over60  SE_normed                                loc
-328    3543  79.358979     Census Tract 430, Waldo County
-404    2630  74.315276   Census Tract 380.01, York County
-201    2200  68.255892     Census Tract 9702, Knox County
-403    2160  70.544997      Census Tract 370, York County
-215    2093  79.483056  Census Tract 9752, Lincoln County
+     over60  SE_normed                                loc           id
+328    3543  79.358979     Census Tract 430, Waldo County  23027043000
+404    2630  74.315276   Census Tract 380.01, York County  23031038001
+201    2200  68.255892     Census Tract 9702, Knox County  23013970200
+403    2160  70.544997      Census Tract 370, York County  23031037000
+215    2093  79.483056  Census Tract 9752, Lincoln County  23015975200
 ```
 
 The visualization is attached below.
@@ -51,12 +71,12 @@ The visualization is attached below.
 #### Incarcerated individuals
 Below are the top 5 areas with the largest number of incarcerated individuals.
 ```
-     estimated_incar  SE_normed                                    loc
-250               16  66.164332      Census Tract 20, Penobscot County
-94                16  65.425313  Census Tract 40.02, Cumberland County
-115               15  64.946698    Census Tract 115, Cumberland County
-31                14  70.469866  Census Tract 465, Androscoggin County
-403               14  70.544997          Census Tract 370, York County
+     estimated_incar  SE_normed                                    loc           id
+250               16  66.164332      Census Tract 20, Penobscot County  23019002000
+94                16  65.425313  Census Tract 40.02, Cumberland County  23005004002
+115               15  64.946698    Census Tract 115, Cumberland County  23005011500
+31                14  70.469866  Census Tract 465, Androscoggin County  23001046500
+403               14  70.544997          Census Tract 370, York County  23031037000
 ```
 
 The visualization is attached below.
@@ -65,12 +85,13 @@ The visualization is attached below.
 #### Veterans
 Below are the top 5 areas with the largest number of veterans.
 ```
-     vet  SE_normed                                    loc
-26   747  82.553505  Census Tract 420, Androscoggin County
-94   666  65.425313  Census Tract 40.02, Cumberland County
-218  653  77.936749      Census Tract 9755, Lincoln County
-367  636  76.898055       Census Tract 245.01, York County
-177  623  75.943838      Census Tract 110, Kennebec County
+Veterans
+     vet  SE_normed                                    loc           id
+26   747  82.553505  Census Tract 420, Androscoggin County  23001042000
+94   666  65.425313  Census Tract 40.02, Cumberland County  23005004002
+218  653  77.936749      Census Tract 9755, Lincoln County  23015975500
+367  636  76.898055       Census Tract 245.01, York County  23031024501
+177  623  75.943838      Census Tract 110, Kennebec County  23011011000
 ```
 
 The visualization is attached below.
@@ -79,12 +100,12 @@ The visualization is attached below.
 #### Persons with disabilities
 Below are the top 5 areas with the largest number of persons with disabilities.
 ```
-      dis  SE_normed                                    loc
-249  1756  70.592152       Census Tract 9, Penobscot County
-404  1450  74.315276       Census Tract 380.01, York County
-328  1347  79.358979         Census Tract 430, Waldo County
-327  1243  76.040201         Census Tract 420, Waldo County
-31   1212  70.469866  Census Tract 465, Androscoggin County
+      dis  SE_normed                                    loc           id
+249  1756  70.592152       Census Tract 9, Penobscot County  23019000900
+404  1450  74.315276       Census Tract 380.01, York County  23031038001
+328  1347  79.358979         Census Tract 430, Waldo County  23027043000
+327  1243  76.040201         Census Tract 420, Waldo County  23027042000
+31   1212  70.469866  Census Tract 465, Androscoggin County  23001046500
 ```
 
 The visualization is attached below.
@@ -93,12 +114,12 @@ The visualization is attached below.
 #### Members of a racial or ethnic minority group
 Below are the top 5 areas with the largest number of members of a racial or ethnic minority group.
 ```
-     minority_pop  SE_normed                                       loc
-85           2212  71.784540     Census Tract 30.02, Cumberland County
-13           1755  99.281702  Census Tract 204.01, Androscoggin County
-72           1609  68.078702     Census Tract 21.02, Cumberland County
-285          1285  74.166010        Census Tract 311, Penobscot County
-80           1240  66.340088        Census Tract 27, Cumberland County
+     minority_pop  SE_normed                                       loc           id
+85           2212  71.784540     Census Tract 30.02, Cumberland County  23005003002
+13           1755  99.281702  Census Tract 204.01, Androscoggin County  23001020401
+72           1609  68.078702     Census Tract 21.02, Cumberland County  23005002102
+285          1285  74.166010        Census Tract 311, Penobscot County  23019031100
+80           1240  66.340088        Census Tract 27, Cumberland County  23005002700
 ```
 
 The visualization is attached below.
@@ -107,12 +128,12 @@ The visualization is attached below.
 #### Rural residents
 Below are the top 5 areas with the largest number of rural residents.
 ```
-     est_rural_pop_22_v2  SE_normed                                  loc
-115                 7305  64.946698  Census Tract 115, Cumberland County
-262                 6555  71.361721    Census Tract 90, Penobscot County
-218                 6471  77.936749    Census Tract 9755, Lincoln County
-327                 6451  76.040201       Census Tract 420, Waldo County
-263                 6448  64.133240   Census Tract 100, Penobscot County
+     est_rural_pop_22_v2  SE_normed                                  loc           id
+115                 7305  64.946698  Census Tract 115, Cumberland County  23005011500
+262                 6555  71.361721    Census Tract 90, Penobscot County  23019009000
+218                 6471  77.936749    Census Tract 9755, Lincoln County  23015975500
+327                 6451  76.040201       Census Tract 420, Waldo County  23027042000
+263                 6448  64.133240   Census Tract 100, Penobscot County  23019010000
 ```
 
 The visualization is attached below.
@@ -121,12 +142,12 @@ The visualization is attached below.
 #### Individuals with a language barrier
 Below are the top 5 areas with the largest number of individuals with a language barrier.
 ```
-     estimated_lang  SE_normed                                    loc
-94              813  65.425313  Census Tract 40.02, Cumberland County
-250             805  66.164332      Census Tract 20, Penobscot County
-115             758  64.946698    Census Tract 115, Cumberland County
-249             748  70.592152       Census Tract 9, Penobscot County
-95              738  66.813837     Census Tract 41, Cumberland County
+     estimated_lang  SE_normed                                    loc           id
+94              813  65.425313  Census Tract 40.02, Cumberland County  23005004002
+250             805  66.164332      Census Tract 20, Penobscot County  23019002000
+115             758  64.946698    Census Tract 115, Cumberland County  23005011500
+249             748  70.592152       Census Tract 9, Penobscot County  23019000900
+95              738  66.813837     Census Tract 41, Cumberland County  23005004100
 ```
 
 The visualization is attached below.
@@ -135,12 +156,12 @@ The visualization is attached below.
 #### Individuals living in households with incomes not exceeding 150 percent of the poverty level
 Below are the top 5 areas with the largest number of individuals living in households with incomes not exceeding 150 percent of the poverty level.
 ```
-     poverty_pop  SE_normed                                       loc
-196         2127  76.180647      Census Tract 241.02, Kennebec County
-249         2091  70.592152          Census Tract 9, Penobscot County
-256         1930  69.714125         Census Tract 61, Penobscot County
-13          1860  99.281702  Census Tract 204.01, Androscoggin County
-238         1848  81.332101          Census Tract 9665, Oxford County
+     poverty_pop  SE_normed                                       loc           id
+196         2127  76.180647      Census Tract 241.02, Kennebec County  23011024102
+249         2091  70.592152          Census Tract 9, Penobscot County  23019000900
+256         1930  69.714125         Census Tract 61, Penobscot County  23019006100
+13          1860  99.281702  Census Tract 204.01, Androscoggin County  23001020401
+238         1848  81.332101          Census Tract 9665, Oxford County  23017966500
 ```
 
 The visualization is attached below.
