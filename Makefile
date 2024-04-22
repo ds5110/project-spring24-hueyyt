@@ -52,3 +52,5 @@ DDI_map:
 clean-data:
 	rm -rf data
 
+# test:
+# 	python -B src/test.py
