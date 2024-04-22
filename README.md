@@ -141,6 +141,11 @@ make DDI_map
 This command will output the DDI map of Maine.
 The result file is named DDI_scaled_tract.png.
 
+### Analysis
+To check the result of the analysis, the following commanded is executed.
+```
+make SE_analysis
+```
 
 ## Visualization
 INFA MAP:

@@ -211,12 +211,7 @@ The visualization is attached below.
 ### Top N area list comparison
 Based on the observation of the top 5 areas lists, we saw some areas repeatedly shown in several lists. Therefore, we planed to analyze the overlapping parts in the lists. 
 
-To check the result of the analysis, the following commanded is executed.
-```
-make SE_analysis
-```
-
-The command prints out the overlapping parts in the lists when the number of overlapping elements is greater than half of the length of the list. 
+Below are the overlapping parts in the lists when the number of overlapping elements is greater than half of the length of the list. 
 ```
 Top 5 Comparison
 ------------------------------------------
