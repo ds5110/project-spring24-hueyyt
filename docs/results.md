@@ -15,7 +15,7 @@ The four variables includes:
 - average download
 - average upload speeds in Megabits per second (Mbps) weighted by number of speed tests based Ookla Speedtest® open dataset
 
-Below are the top 5 areas with the highest INFA scores.
+Below are the top 5 areas with the highest INFA scores. 
 ```
               id  INFA_scaled
 0    23001010100   100.000000
@@ -24,6 +24,10 @@ Below are the top 5 areas with the highest INFA scores.
 86   23003952700    86.056359
 16   23001020100    85.309379
 ```
+- None of these ids is shown in the top 5 areas with the highest SE scores. It seems that SE score distribution and INFA score distribution might be very different. To verify our assumption, we can compare the INFA map and SE map.
+
+Below is the INFA score map. 
+<img src='../figs/INFA_scaled_tract.png'>
 
 
 ### SE part
