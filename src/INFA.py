@@ -33,8 +33,10 @@ merged_df['INFA'] = merged_df['NIA'] * 0.35 + merged_df['NCD'] * 0.35 - merged_d
 # Scale INFA score to range 0 to 100
 merged_df['INFA_scaled'] = 100 * (merged_df['INFA'] - merged_df['INFA'].min()) / (merged_df['INFA'].max() - merged_df['INFA'].min())
 
+
 # Output results
-print(merged_df[['id', 'INFA_scaled']])
+infa_scaled = merged_df[['id', 'INFA_scaled']]
+print(infa_scaled)
 
 # Save to CSV file
-merged_df[['id', 'INFA_scaled']].to_csv("data/infa_scaled.csv")
+#merged_df[['id', 'INFA_scaled']].to_csv("data/infa_scaled.csv")
